@@ -6,33 +6,171 @@
     <title>Práxis Mediadora AI | Planejamento Feuerstein + Vigotski</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
-        .glass-panel { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border: 1px solid #e2e8f0; }
+        :root {
+            --brand: #4f46e5;
+            --brand-light: #eef2ff;
+            --brand-mid: #818cf8;;
+            --gold: #d97706;
+            --gold-light: #fffbeb;
+            --emerald: #059669;
+            --surface: #ffffff;
+            --bg: #f1f5f9;
+            --border: #e2e8f0;
+            --text: #0f172a;
+            --muted: #64748b;
+            --sidebar: #0f172a;
+        }
+        body { font-family: 'DM Sans', sans-serif; background-color: var(--bg); }
+        .glass-panel { background: rgba(255,255,255,0.97); backdrop-filter: blur(12px); border: 1px solid var(--border); }
+        
+        /* Inputs focus */
+        input:focus, textarea:focus, select:focus {
+            border-color: var(--brand) !important;
+            box-shadow: 0 0 0 3px rgba(79,70,229,.12) !important;
+            outline: none !important;
+        }
+
+        /* Spinner */
         .spinner { animation: spin 1s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
         /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #f1f1f1; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 99px; }
         ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        /* Progress steps */
+        .step-dot {
+            width: 8px; height: 8px; border-radius: 99px;
+            background: rgba(255,255,255,.2);
+            transition: all .3s ease;
+        }
+        .step-dot.active { background: #818cf8; width: 20px; }
+        .step-dot.done { background: #34d399; }
+
+        /* Card hover */
+        .glass-panel { transition: box-shadow .2s; }
+        .glass-panel:hover { box-shadow: 0 4px 24px rgba(79,70,229,.08); }
+
+        /* Animated badge */
+        @keyframes fadeSlideIn { from { opacity:0; transform:translateY(-6px); } to { opacity:1; transform:translateY(0); } }
+        .anim-in { animation: fadeSlideIn .4s ease both; }
+
+        /* Button pulse */
+        @keyframes subtlePulse {
+            0%, 100% { box-shadow: 0 4px 14px rgba(79,70,229,.3); }
+            50% { box-shadow: 0 4px 24px rgba(79,70,229,.5); }
+        }
+        #generate-prompt-btn { animation: subtlePulse 3s ease-in-out infinite; }
+        #generate-prompt-btn:hover { animation: none; }
+
+        /* Tooltip */
+        .tooltip-wrap { position: relative; display: inline-flex; }
+        .tooltip-wrap .tooltip-box {
+            position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%);
+            background: #1e293b; color: #f8fafc; font-size: 11px; line-height: 1.4;
+            padding: 6px 10px; border-radius: 6px; white-space: nowrap; max-width: 220px;
+            white-space: normal; text-align: center;
+            opacity: 0; pointer-events: none; transition: opacity .2s;
+            z-index: 50;
+        }
+        .tooltip-wrap:hover .tooltip-box { opacity: 1; }
+
+        /* Field required dot */
+        .req::after { content: ''; display: inline-block; width: 5px; height: 5px; background: #f43f5e; border-radius: 99px; margin-left: 4px; vertical-align: middle; }
+
+        /* Step badge in result panel */
+        .step-badge {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 22px; height: 22px; border-radius: 6px;
+            background: #1e293b; color: #fff; font-size: 11px; font-weight: 700;
+            font-family: 'DM Mono', monospace; flex-shrink: 0;
+        }
+
+        /* AI destination cards */
+        .ai-card {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            padding: 20px; border-radius: 14px; border: 1.5px solid;
+            transition: all .2s; cursor: pointer; text-decoration: none;
+        }
+        .ai-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,.08); }
+
+        /* Mono font for textarea */
+        #generated-prompt-textarea { font-family: 'DM Mono', monospace; font-size: 12px; }
+
+        /* Sidebar progress */
+        .field-progress-bar {
+            height: 3px; border-radius: 99px; background: rgba(255,255,255,.1);
+            overflow: hidden; margin-top: 4px;
+        }
+        .field-progress-fill {
+            height: 100%; border-radius: 99px;
+            background: linear-gradient(90deg, #818cf8, #34d399);
+            width: 0%; transition: width .4s ease;
+        }
+
+        /* Divider with label */
+        .divider-label {
+            display: flex; align-items: center; gap: 10px;
+            color: #94a3b8; font-size: 11px; font-weight: 600;
+            text-transform: uppercase; letter-spacing: .07em;
+        }
+        .divider-label::before, .divider-label::after {
+            content: ''; flex: 1; height: 1px; background: #e2e8f0;
+        }
+
+        /* DOCX badge */
+        .docx-badge {
+            display: inline-flex; align-items: center; gap: 5px;
+            background: #eff6ff; color: #2563eb; border: 1px solid #bfdbfe;
+            font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 99px;
+            text-transform: uppercase; letter-spacing: .05em;
+        }
+
+        /* Checkbox-style toggle */
+        .opt-chip {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 4px 10px; border-radius: 99px; border: 1px solid #e2e8f0;
+            font-size: 11px; color: #64748b; cursor: default;
+        }
     </style>
 </head>
 <body class="h-screen flex overflow-hidden text-slate-800">
 
     <!-- Sidebar / Theory Guide -->
-    <aside class="w-80 bg-slate-900 text-white flex flex-col p-6 shadow-2xl z-10 overflow-y-auto">
-        <div class="flex items-center gap-3 mb-8">
-            <div class="bg-indigo-500 p-2 rounded-lg"><i class="fa-solid fa-brain text-xl"></i></div>
+    <aside class="w-80 bg-slate-900 text-white flex flex-col p-6 shadow-2xl z-10 overflow-y-auto" style="background: var(--sidebar);">
+        <div class="flex items-center gap-3 mb-2">
+            <div class="bg-indigo-500 p-2 rounded-lg shadow-lg shadow-indigo-900/40"><i class="fa-solid fa-brain text-xl"></i></div>
             <h1 class="text-xl font-bold tracking-tight">Práxis<span class="text-indigo-400">Mediadora</span></h1>
+        </div>
+        <p class="text-[10px] text-slate-500 mb-6 ml-11">Motor de IA Pedagógica v2.0</p>
+
+        <!-- Progress Tracker -->
+        <div class="bg-slate-800/60 rounded-xl p-4 mb-6 border border-slate-700/50">
+            <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Preenchimento</span>
+                <span id="progress-pct" class="text-xs font-bold text-indigo-400 font-mono">0%</span>
+            </div>
+            <div class="field-progress-bar">
+                <div id="progress-fill" class="field-progress-fill"></div>
+            </div>
+            <div class="flex gap-1.5 mt-3" id="step-dots">
+                <div class="step-dot" data-step="0"></div>
+                <div class="step-dot" data-step="1"></div>
+                <div class="step-dot" data-step="2"></div>
+                <div class="step-dot" data-step="3"></div>
+                <div class="step-dot" data-step="4"></div>
+            </div>
         </div>
 
         <div class="space-y-6">
             <div>
                 <h2 class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">Fundamento Epistemológico</h2>
                 <p class="text-sm text-slate-300 leading-relaxed mb-4">
-                    Esta ferramenta pedagógica opera sob a integração das ideias de Vigotski e a modificabilidade estrutural de Feuerstein.
+                    Este motor de IA opera sob a integração materialista-histórica de Vigotski e a modificabilidade estrutural de Feuerstein.
                 </p>
             </div>
 
@@ -72,10 +210,36 @@
     <!-- Main Content -->
     <main class="flex-1 flex flex-col h-screen overflow-hidden bg-slate-50 relative">
         
-        <header class="bg-white border-b border-slate-200 px-8 py-6 flex justify-between items-center z-10">
+        <header class="bg-white border-b border-slate-200 px-8 py-5 flex justify-between items-center z-10">
             <div>
-                <h2 class="text-2xl font-bold text-slate-800">Criar Intervenção Mediada</h2>
-                <p class="text-sm text-slate-500 mt-1">Preencha os dados estruturais para gerar o script do professor.</p>
+                <div class="flex items-center gap-2 mb-1">
+                    <span class="text-[10px] font-bold text-indigo-600 bg-indigo-50 border border-indigo-100 px-2 py-0.5 rounded-full uppercase tracking-wider">Planejamento Ativo</span>
+                    <span class="docx-badge"><i class="fa-solid fa-file-word"></i> Saída em DOCX</span>
+                </div>
+                <h2 class="text-xl font-bold text-slate-800">Criar Intervenção Mediada</h2>
+                <p class="text-sm text-slate-500 mt-0.5">Preencha os dados estruturais para gerar o script do professor.</p>
+            </div>
+            <!-- Flow steps -->
+            <div class="hidden lg:flex items-center gap-2 text-xs">
+                <div class="flex items-center gap-1.5 text-slate-400">
+                    <span class="w-6 h-6 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold text-[10px]">1</span>
+                    <span class="font-medium text-slate-600">Contexto</span>
+                </div>
+                <i class="fa-solid fa-chevron-right text-slate-300 text-[10px]"></i>
+                <div class="flex items-center gap-1.5 text-slate-400">
+                    <span class="w-6 h-6 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold text-[10px]">2</span>
+                    <span class="font-medium text-slate-600">ZDP</span>
+                </div>
+                <i class="fa-solid fa-chevron-right text-slate-300 text-[10px]"></i>
+                <div class="flex items-center gap-1.5 text-slate-400">
+                    <span class="w-6 h-6 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold text-[10px]">3</span>
+                    <span class="font-medium text-slate-600">Funções Cognitivas</span>
+                </div>
+                <i class="fa-solid fa-chevron-right text-slate-300 text-[10px]"></i>
+                <div class="flex items-center gap-1.5">
+                    <span class="w-6 h-6 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center font-bold text-[10px]">4</span>
+                    <span class="font-medium text-slate-400">Gerar Prompt</span>
+                </div>
             </div>
         </header>
 
@@ -85,23 +249,30 @@
             <div class="w-full lg:w-4/12 space-y-6">
                 <!-- Bloco 1: Contexto e Materialidade -->
                 <div class="glass-panel p-6 rounded-xl shadow-sm">
-                    <h3 class="text-lg font-semibold text-slate-800 mb-4 flex items-center gap-2">
-                        <i class="fa-solid fa-map-location-dot text-indigo-500"></i> Contexto & Materialidade
-                    </h3>
+                    <div class="flex items-center gap-2 mb-5">
+                        <div class="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center">
+                            <i class="fa-solid fa-map-location-dot text-indigo-500 text-sm"></i>
+                        </div>
+                        <h3 class="text-base font-semibold text-slate-800">Contexto & Materialidade</h3>
+                        <span class="ml-auto text-[10px] text-slate-400 font-mono">BLOCO 01</span>
+                    </div>
                     <div class="space-y-4">
                         <div>
-                            <label class="block text-sm font-medium text-slate-700 mb-1">Disciplina e Tema</label>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1.5 uppercase tracking-wider req">Disciplina e Tema</label>
                             <div class="flex gap-3">
-                                <input type="text" id="disciplina" placeholder="Ex: História" class="w-1/3 rounded-lg border-slate-300 border p-2.5 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none">
-                                <input type="text" id="tema" placeholder="Ex: Revolução Industrial" class="w-2/3 rounded-lg border-slate-300 border p-2.5 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none">
+                                <input type="text" id="disciplina" placeholder="Disciplina" class="w-1/3 rounded-lg border-slate-200 border p-2.5 text-sm bg-slate-50 focus:bg-white transition-colors">
+                                <input type="text" id="tema" placeholder="Ex: Revolução Industrial" class="w-2/3 rounded-lg border-slate-200 border p-2.5 text-sm bg-slate-50 focus:bg-white transition-colors">
                             </div>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-slate-700 mb-1">Realidade Material do Aluno</label>
+                            <div class="flex items-center justify-between mb-1.5">
+                                <label class="text-xs font-semibold text-slate-600 uppercase tracking-wider req">Realidade Material do Aluno</label>
+                                <span class="text-[10px] text-slate-400 italic">Use o microfone ou escreva</span>
+                            </div>
                             <div class="relative">
-                                <textarea id="realidade" rows="2" placeholder="Ex: Alunos de periferia, sem acesso à internet, histórico de evasão escolar..." class="w-full rounded-lg border-slate-300 border p-2.5 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none pr-10"></textarea>
-                                <button id="mic-btn" class="absolute top-2 right-2 text-slate-400 hover:text-indigo-500 transition-colors p-2 rounded-lg" title="Ditar Realidade">
-                                    <i class="fa-solid fa-microphone"></i>
+                                <textarea id="realidade" rows="2" placeholder="Ex: Alunos de periferia, sem acesso à internet, histórico de evasão escolar..." class="w-full rounded-lg border-slate-200 border p-2.5 text-sm bg-slate-50 focus:bg-white transition-colors pr-10 resize-none"></textarea>
+                                <button id="mic-btn" class="absolute top-2 right-2 text-slate-400 hover:text-indigo-500 transition-colors p-2 rounded-lg hover:bg-indigo-50" title="Ditar Realidade">
+                                    <i class="fa-solid fa-microphone text-sm"></i>
                                 </button>
                             </div>
                         </div>
@@ -111,9 +282,12 @@
                 <!-- Bloco 2: ZDP (Vigotski) -->
                 <div class="glass-panel p-6 rounded-xl shadow-sm border-l-4 border-l-indigo-500">
                     <div class="mb-5">
-                        <h3 class="text-lg font-semibold text-slate-800 flex items-center gap-2">
-                            <i class="fa-solid fa-arrows-left-right text-indigo-600"></i> A Ponte da Aprendizagem (ZDP)
-                        </h3>
+                        <div class="flex items-center justify-between mb-1">
+                            <h3 class="text-base font-semibold text-slate-800 flex items-center gap-2">
+                                <i class="fa-solid fa-arrows-left-right text-indigo-600"></i> A Ponte da Aprendizagem (ZDP)
+                            </h3>
+                            <span class="text-[10px] text-slate-400 font-mono">BLOCO 02</span>
+                        </div>
                         <p class="text-xs text-slate-500 mt-1 leading-relaxed">
                             Vigotski ensina que a aula falha se for muito fácil (tédio) ou muito difícil (frustração). A "Ponte" é a distância exata entre o que ele sabe hoje e o que ele vai aprender com sua ajuda agora.
                         </p>
@@ -157,24 +331,24 @@
                     <div class="space-y-5">
                         <!-- Ponto de Partida -->
                         <div class="bg-indigo-50/50 p-4 rounded-lg border border-indigo-100">
-                            <label class="block text-sm font-bold text-slate-700 mb-1">1. O Ponto de Partida (O que ele já consegue fazer sozinho?)</label>
+                            <label class="block text-xs font-bold text-slate-700 mb-1 req">1. O Ponto de Partida <span class="font-normal text-slate-500">(O que ele já consegue fazer sozinho?)</span></label>
                             <p class="text-[11px] text-slate-600 mb-3 leading-relaxed">
                                 Seja sincero sobre a realidade atual. Onde ele está ancorado hoje? (Não use termos abstratos)<br>
                                 <span class="text-indigo-600 font-medium"><i class="fa-solid fa-arrow-right-from-bracket mr-1"></i>Ex:</span> "Consegue calcular troco mentalmente na venda, mas erra no papel."<br>
                                 <span class="text-indigo-600 font-medium"><i class="fa-solid fa-arrow-right-from-bracket mr-1"></i>Ex:</span> "Ele lê uma notícia no celular, mas só olha a manchete e acredita em tudo."
                             </p>
-                            <input type="text" id="ndr" placeholder="Descreva aqui o ponto de partida do seu aluno..." class="w-full rounded-lg border-slate-300 border p-2.5 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none">
+                            <input type="text" id="ndr" placeholder="Descreva aqui o ponto de partida do seu aluno..." class="w-full rounded-lg border-slate-200 border p-2.5 text-sm bg-white">
                         </div>
                         
                         <!-- Linha de Chegada -->
-                        <div class="bg-indigo-50/50 p-4 rounded-lg border border-indigo-100">
-                            <label class="block text-sm font-bold text-slate-700 mb-1">2. A Linha de Chegada (O que ele fará COM a sua ajuda hoje?)</label>
+                        <div class="bg-emerald-50/40 p-4 rounded-lg border border-emerald-100">
+                            <label class="block text-xs font-bold text-slate-700 mb-1 req">2. A Linha de Chegada <span class="font-normal text-slate-500">(O que ele fará COM a sua ajuda hoje?)</span></label>
                             <p class="text-[11px] text-slate-600 mb-3 leading-relaxed">
                                 Qual é o próximo passo <b>lógico e alcançável</b> para o qual você vai "puxar" esse aluno?<br>
                                 <span class="text-emerald-600 font-medium"><i class="fa-solid fa-bullseye mr-1"></i>Ex:</span> "Transformar a lógica mental do troco em uma equação escrita de 1º grau."<br>
                                 <span class="text-emerald-600 font-medium"><i class="fa-solid fa-bullseye mr-1"></i>Ex:</span> "Aprender a desconfiar da manchete e buscar a fonte primária da notícia."
                             </p>
-                            <input type="text" id="ndp" placeholder="Descreva aqui qual o próximo passo alcançável de hoje..." class="w-full rounded-lg border-slate-300 border p-2.5 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none">
+                            <input type="text" id="ndp" placeholder="Descreva aqui qual o próximo passo alcançável de hoje..." class="w-full rounded-lg border-slate-200 border p-2.5 text-sm bg-white">
                         </div>
                     </div>
                 </div>
@@ -182,9 +356,12 @@
                 <!-- Bloco 3: Funções Cognitivas (Feuerstein) -->
                 <div class="glass-panel p-6 rounded-xl shadow-sm border-l-4 border-l-amber-500">
                     <div class="mb-5">
-                        <h3 class="text-lg font-semibold text-slate-800 flex items-center gap-2">
-                            <i class="fa-solid fa-microscope text-amber-600"></i> O Foco da Mediação (Onde ele trava?)
-                        </h3>
+                        <div class="flex items-center justify-between mb-1">
+                            <h3 class="text-base font-semibold text-slate-800 flex items-center gap-2">
+                                <i class="fa-solid fa-microscope text-amber-600"></i> O Foco da Mediação <span class="text-slate-500 font-normal">(Onde ele trava?)</span>
+                            </h3>
+                            <span class="text-[10px] text-slate-400 font-mono">BLOCO 03</span>
+                        </div>
                         <p class="text-xs text-slate-500 mt-1 leading-relaxed">
                             Feuerstein mapeia onde o pensamento do aluno se perde. Não se apegue aos termos acadêmicos: escolha o <b>comportamento real</b> que você mais observa nesse perfil de aluno durante a aula.
                         </p>
@@ -193,9 +370,9 @@
                     <div class="space-y-5">
                         <!-- Fase 1 -->
                         <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
-                            <label class="block text-sm font-bold text-slate-700">1. A Entrada (Recebendo os dados)</label>
+                            <label class="block text-xs font-bold text-slate-700 mb-0.5">1. A Entrada <span class="font-normal text-slate-500">(Recebendo os dados)</span></label>
                             <p class="text-[11px] text-slate-500 mb-2">O erro principal acontece logo no início, no contato com o texto ou exercício?</p>
-                            <select id="fase-entrada" class="w-full rounded-lg border-slate-300 border p-2.5 text-sm focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none bg-white">
+                            <select id="fase-entrada" class="w-full rounded-lg border-slate-200 border p-2.5 text-sm bg-white focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none cursor-pointer">
                                 <option value="Impulsividade na coleta de dados (O aluno lê correndo, 'chuta' as respostas e ignora os detalhes importantes da instrução)">Impulsividade: Lê correndo, "chuta" respostas e ignora a instrução.</option>
                                 <option value="Percepção episódica da realidade (O aluno vê as informações soltas, fragmentadas, sem conseguir ligar o que veio antes e o que vem depois)">Visão Fragmentada: Vê os fatos soltos, não percebe começo, meio e fim.</option>
                                 <option value="Falta de orientação espacial/temporal (O aluno não consegue se localizar no contexto da época histórica ou do lugar geográfico)">Desorientação: Fica totalmente perdido no tempo (época) ou espaço (lugar).</option>
@@ -204,9 +381,9 @@
                         
                         <!-- Fase 2 -->
                         <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
-                            <label class="block text-sm font-bold text-slate-700">2. A Elaboração (Processando na mente)</label>
+                            <label class="block text-xs font-bold text-slate-700 mb-0.5">2. A Elaboração <span class="font-normal text-slate-500">(Processando na mente)</span></label>
                             <p class="text-[11px] text-slate-500 mb-2">Ele até lê bem, mas na hora de cruzar ideias e raciocinar, onde ele empaca?</p>
-                            <select id="fase-elaboracao" class="w-full rounded-lg border-slate-300 border p-2.5 text-sm focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none bg-white">
+                            <select id="fase-elaboracao" class="w-full rounded-lg border-slate-200 border p-2.5 text-sm bg-white focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none cursor-pointer">
                                 <option value="Dificuldade em perceber contradições (O aluno aceita duas ideias opostas como verdadeiras sem questionar o sentido lógico)">Não percebe contradição lógicas: Aceita ideias opostas sem questionar.</option>
                                 <option value="Incapacidade de comparar/categorizar (O aluno não consegue olhar para duas coisas e dizer o que têm em comum ou de diferente)">Dificuldade em comparar: Não consegue ver semelhanças, diferenças ou agrupar.</option>
                                 <option value="Pensamento não-hipotético (O aluno não consegue prever consequências, pensar 'E se...?' ou trabalhar com ideias fora do concreto)">Falta de pensamento hipotético: Não consegue imaginar cenários ("E se?").</option>
@@ -215,9 +392,9 @@
 
                         <!-- Fase 3 -->
                         <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
-                            <label class="block text-sm font-bold text-slate-700">3. A Saída (Expressando o que aprendeu)</label>
+                            <label class="block text-xs font-bold text-slate-700 mb-0.5">3. A Saída <span class="font-normal text-slate-500">(Expressando o que aprendeu)</span></label>
                             <p class="text-[11px] text-slate-500 mb-2">Ele entendeu na cabeça, mas na hora de explicar falando ou escrevendo...</p>
-                            <select id="fase-saida" class="w-full rounded-lg border-slate-300 border p-2.5 text-sm focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none bg-white">
+                            <select id="fase-saida" class="w-full rounded-lg border-slate-200 border p-2.5 text-sm bg-white focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none cursor-pointer">
                                 <option value="Comunicação egocêntrica (O aluno acha que o professor 'lê sua mente', responde 'tipo assim' e omite os passos lógicos da explicação)">Comunicação Egocêntrica: Responde "tipo assim", achando que você lê a mente dele.</option>
                                 <option value="Bloqueio e desistência (O aluno trava no primeiro erro, apaga tudo violentamente ou diz 'não sei' por medo de arriscar)">Bloqueio e Desistência: Trava no primeiro erro e desiste logo de cara.</option>
                                 <option value="Vocabulário inadequado/impreciso (Faltam palavras adequadas para a disciplina, ele substitui conceitos por 'aquele negócio' ou 'bagulho')">Vocabulário Impreciso: Substitui os nomes corretos por "aquele negócio" ou "bagulho".</option>
@@ -228,11 +405,18 @@
 
                 <!-- Ações do Professor (Modificado) -->
                 <div class="space-y-3 mt-8">
+                    <!-- DOCX note -->
+                    <div class="flex items-start gap-2 bg-blue-50 border border-blue-100 rounded-xl p-3">
+                        <i class="fa-solid fa-circle-info text-blue-400 mt-0.5 text-sm flex-shrink-0"></i>
+                        <p class="text-[11px] text-blue-700 leading-relaxed">O prompt gerado já inclui instruções para que a IA formate o planejamento em <strong>documento DOCX</strong> pronto para impressão.</p>
+                    </div>
+
                     <!-- Botão Principal: Gerar Prompt -->
-                    <button id="generate-prompt-btn" class="w-full bg-slate-800 hover:bg-slate-900 text-white font-semibold py-4 px-6 rounded-xl shadow-lg shadow-slate-200 transition-all transform hover:-translate-y-1 flex items-center justify-center gap-3">
-                        <i class="fa-solid fa-clipboard-list text-emerald-400"></i> Gerar "Super Prompt" para Copiar
+                    <button id="generate-prompt-btn" class="w-full bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white font-semibold py-4 px-6 rounded-xl transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-3">
+                        <i class="fa-solid fa-clipboard-list text-emerald-300 text-lg"></i>
+                        <span>Gerar Super Prompt</span>
+                        <span class="ml-auto text-[10px] font-normal opacity-70 bg-white/10 px-2 py-0.5 rounded-full">inclui DOCX</span>
                     </button>
-                    
 
                     <!-- NOVO: Botão de Limpar -->
                     <button id="clear-btn" class="w-full mt-2 text-slate-400 hover:text-red-500 hover:bg-red-50 text-sm font-medium py-2 rounded-xl transition-all flex items-center justify-center gap-2">
@@ -248,12 +432,13 @@
                     <!-- Header Result -->
                     <div class="bg-slate-50 border-b border-slate-200 p-4 flex items-center justify-between gap-3">
                         <div class="flex items-center gap-3">
-                            <div class="flex gap-2">
+                            <div class="flex gap-1.5">
                                 <div class="w-3 h-3 rounded-full bg-red-400"></div>
                                 <div class="w-3 h-3 rounded-full bg-amber-400"></div>
                                 <div class="w-3 h-3 rounded-full bg-emerald-400"></div>
                             </div>
                             <span class="text-xs font-medium text-slate-500 font-mono">Script_de_Intervencao.md</span>
+                            <span class="docx-badge hidden" id="docx-ready-badge"><i class="fa-solid fa-file-word"></i> Inclui instrução DOCX</span>
                         </div>
                         <button id="export-pdf-btn" class="hidden bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold py-2 px-4 rounded-lg shadow-md transition-all flex items-center gap-2">
                             <i class="fa-solid fa-file-pdf"></i> Exportar PDF Oficial
@@ -281,42 +466,63 @@
 
                         <!-- Prompt View State (NOVA TELA) -->
                         <div id="prompt-state" class="hidden absolute inset-0 flex flex-col p-8 bg-white z-10 overflow-y-auto">
-                            <div class="flex items-center gap-4 mb-8">
+                            <div class="flex items-center gap-4 mb-6 anim-in">
                                 <div class="bg-emerald-100 p-4 rounded-full text-emerald-600 shadow-sm border border-emerald-200">
                                     <i class="fa-solid fa-clipboard-check text-2xl"></i>
                                 </div>
                                 <div>
-                                    <h3 class="text-2xl font-bold text-slate-800">Seu Super Prompt está pronto!</h3>
-                                    <p class="text-sm text-slate-500 mt-1">Siga os 2 passos abaixo para gerar sua aula em qualquer IA gratuita.</p>
+                                    <h3 class="text-xl font-bold text-slate-800">Super Prompt gerado!</h3>
+                                    <p class="text-sm text-slate-500 mt-0.5">Siga os 3 passos abaixo para gerar e exportar sua aula.</p>
+                                </div>
+                                <div class="ml-auto flex gap-2 flex-wrap justify-end">
+                                    <span class="opt-chip"><i class="fa-solid fa-check text-emerald-500 text-[10px]"></i> Vigotski</span>
+                                    <span class="opt-chip"><i class="fa-solid fa-check text-emerald-500 text-[10px]"></i> Feuerstein</span>
+                                    <span class="opt-chip"><i class="fa-solid fa-check text-blue-500 text-[10px]"></i> DOCX</span>
                                 </div>
                             </div>
 
-                            <div class="space-y-8 flex-1">
+                            <div class="space-y-6 flex-1">
                                 <!-- Passo 1 -->
-                                <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 relative shadow-sm">
+                                <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 relative shadow-sm anim-in" style="animation-delay:.05s">
                                     <div class="flex justify-between items-center mb-3">
-                                        <span class="text-sm font-bold text-slate-700 uppercase tracking-wider flex items-center gap-2">
-                                            <span class="bg-slate-800 text-white w-5 h-5 rounded flex items-center justify-center text-xs">1</span> Copie o texto metodológico:
+                                        <span class="text-sm font-bold text-slate-700 flex items-center gap-2">
+                                            <span class="step-badge">1</span> Copie o texto metodológico:
                                         </span>
-                                        <button id="copy-prompt-btn" class="text-xs bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 py-2 px-4 rounded-md transition-all flex items-center gap-2 font-semibold shadow-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                                        <button id="copy-prompt-btn" class="text-xs bg-white border border-slate-300 hover:bg-indigo-50 hover:border-indigo-300 text-slate-700 py-2 px-4 rounded-md transition-all flex items-center gap-2 font-semibold shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
                                             <i class="fa-solid fa-copy"></i> Copiar Prompt
                                         </button>
                                     </div>
-                                    <textarea id="generated-prompt-textarea" readonly class="w-full h-64 bg-white border border-slate-300 rounded-lg p-4 text-sm font-mono text-slate-600 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 resize-none"></textarea>
+                                    <textarea id="generated-prompt-textarea" readonly class="w-full h-52 bg-white border border-slate-200 rounded-lg p-4 text-sm text-slate-600 focus:outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-400 resize-none"></textarea>
                                 </div>
 
                                 <!-- Passo 2 -->
-                                <div>
-                                    <span class="text-sm font-bold text-slate-700 uppercase tracking-wider mb-4 flex items-center gap-2">
-                                        <span class="bg-slate-800 text-white w-5 h-5 rounded flex items-center justify-center text-xs">2</span> Cole o texto na Inteligência Artificial:
+                                <div class="anim-in" style="animation-delay:.1s">
+                                    <span class="text-sm font-bold text-slate-700 mb-4 flex items-center gap-2">
+                                        <span class="step-badge">2</span> Cole na IA e gere o planejamento:
                                     </span>
-                                    <div class="grid grid-cols-1 gap-4">
+                                    <div class="grid grid-cols-1 gap-3 mt-3">
                                         <!-- Claude -->
-                                        <a href="https://claude.ai/new" target="_blank" class="flex flex-col items-center justify-center p-5 rounded-xl border border-orange-200 bg-gradient-to-b from-orange-50 to-white hover:border-orange-400 hover:shadow-md transition-all group cursor-pointer text-decoration-none">
+                                        <a href="https://claude.ai/new" target="_blank" class="ai-card border-orange-200 bg-gradient-to-br from-orange-50 to-white hover:border-orange-400 group">
                                             <i class="fa-solid fa-brain text-3xl text-orange-500 mb-3 group-hover:scale-110 transition-transform"></i>
                                             <span class="font-bold text-slate-800 text-base">Claude (claude.ai)</span>
-                                            <span class="text-xs text-slate-500 text-center mt-1">Exclusivamente recomendado devido à sua altíssima empatia e aderência à nuance pedagógica e teórica exigida neste tipo de mediação.</span>
+                                            <span class="text-xs text-slate-500 text-center mt-1 max-w-xs">Exclusivamente recomendado — altíssima empatia e aderência à nuance pedagógica e teórica exigida.</span>
                                         </a>
+                                    </div>
+                                </div>
+
+                                <!-- Passo 3: Exportar DOCX -->
+                                <div class="anim-in" style="animation-delay:.15s">
+                                    <span class="text-sm font-bold text-slate-700 mb-3 flex items-center gap-2">
+                                        <span class="step-badge bg-blue-700">3</span> Exporte o documento:
+                                    </span>
+                                    <div class="mt-3 bg-blue-50 border border-blue-100 rounded-xl p-4 flex gap-3 items-start">
+                                        <div class="w-9 h-9 rounded-lg bg-blue-600 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                            <i class="fa-solid fa-file-word text-white text-lg"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm font-bold text-slate-800 mb-1">Salvar como documento Word (.docx)</p>
+                                            <p class="text-xs text-slate-600 leading-relaxed">O prompt já instrui a IA a formatar toda a resposta como um documento Word estruturado. Após a IA gerar o planejamento, peça: <span class="font-mono bg-white border border-blue-200 px-1.5 py-0.5 rounded text-blue-700">"Salve como arquivo .docx"</span> ou use o botão de exportar do Claude.</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -703,7 +909,20 @@ FORMATO DA SUA RESPOSTA OBRIGATÓRIA (Use formatação Markdown rigorosa):
 - **Critério 1 (Entrada):** O aluno parou de "chutar" e analisou os dados? (Sim/Não - Evidência)
 - **Critério 2 (Elaboração):** O aluno conectou as ideias e percebeu contradições? (Sim/Não - Evidência)
 - **Critério 3 (Saída):** O aluno expressou o raciocínio sem bloqueio ou comunicação egocêntrica? (Sim/Não - Evidência)
-- **Conclusão:** Próximos passos para a EAM (Experiência de Aprendizagem Mediada).`;
+- **Conclusão:** Próximos passos para a EAM (Experiência de Aprendizagem Mediada).
+
+---
+
+# INSTRUÇÃO DE FORMATAÇÃO PARA EXPORTAÇÃO EM DOCX
+Ao final da sua resposta, inclua um aviso ao professor com o seguinte texto:
+
+> **📄 Como salvar este planejamento como documento Word (.docx):**
+> 1. Selecione todo o conteúdo desta resposta (Ctrl+A ou Cmd+A dentro do chat).
+> 2. Copie (Ctrl+C).
+> 3. Abra o Microsoft Word ou Google Docs e cole (Ctrl+V).
+> 4. Salve como ".docx" com o nome: **Planejamento_${data.disciplina}_${data.tema.replace(/\s+/g, '_')}.docx**
+>
+> *Dica: O Claude também permite exportar a conversa diretamente. Clique nos três pontos (⋯) ao lado da mensagem e escolha "Copiar" ou use a integração com Google Docs se disponível.*`;
             };
 
             // Evento 1: Clicou em "Gerar Super Prompt"
@@ -716,6 +935,10 @@ FORMATO DA SUA RESPOSTA OBRIGATÓRIA (Use formatação Markdown rigorosa):
                     
                     hideAllStates();
                     if(promptState) promptState.classList.remove('hidden');
+
+                    // Show DOCX badge in header
+                    const docxBadge = document.getElementById('docx-ready-badge');
+                    if (docxBadge) docxBadge.classList.remove('hidden');
                 });
             }
 
@@ -837,6 +1060,32 @@ FORMATO DA SUA RESPOSTA OBRIGATÓRIA (Use formatação Markdown rigorosa):
                 modal.classList.add('hidden');
             }, 300);
         }
+
+        // Progress tracker
+        const trackableFields = ['disciplina', 'tema', 'realidade', 'ndr', 'ndp'];
+        function updateProgress() {
+            const filled = trackableFields.filter(id => {
+                const el = document.getElementById(id);
+                return el && el.value.trim().length > 0;
+            }).length;
+            const pct = Math.round((filled / trackableFields.length) * 100);
+            const fill = document.getElementById('progress-fill');
+            const pctEl = document.getElementById('progress-pct');
+            if (fill) fill.style.width = pct + '%';
+            if (pctEl) pctEl.textContent = pct + '%';
+            // Update dots
+            const dots = document.querySelectorAll('.step-dot');
+            dots.forEach((dot, i) => {
+                dot.classList.remove('active', 'done');
+                if (i < filled) dot.classList.add('done');
+                else if (i === filled) dot.classList.add('active');
+            });
+        }
+        trackableFields.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.addEventListener('input', updateProgress);
+        });
+        updateProgress();
 
         // Close modals when clicking outside of them
         document.addEventListener('click', function(e) {
