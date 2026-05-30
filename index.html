@@ -32,28 +32,8 @@
             <div>
                 <h2 class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">Fundamento Epistemológico</h2>
                 <p class="text-sm text-slate-300 leading-relaxed mb-4">
-                    Esta ferramenta pedagógica opera a integração de Vigotski e a modificabilidade estrutural de Feuerstein para gerar atividades educativas que realmente atendam às expectativas dos professores e professoras para mediar suas intervenções com alunos que necessitam de ações especiais.
+                    Este motor de IA opera sob a integração materialista-histórica de Vigotski e a modificabilidade estrutural de Feuerstein.
                 </p>
-            </div>
-
-            <!-- API Configuration (NEW) -->
-            <div class="bg-indigo-900/50 rounded-lg p-4 border border-indigo-500/30">
-                <div class="flex items-center justify-between mb-2">
-                    <div class="flex items-center gap-2 text-amber-400">
-                        <i class="fa-solid fa-key"></i>
-                        <h3 class="font-semibold text-sm">Motor IA (Avançado)</h3>
-                    </div>
-                    <button onclick="openApiModal()" class="text-indigo-300 hover:text-white transition-colors" title="O que é isso?">
-                        <i class="fa-solid fa-circle-question text-lg"></i>
-                    </button>
-                </div>
-                <p class="text-xs text-slate-300 mb-2">Conecte o app direto à inteligência artificial.</p>
-                <input type="password" id="api-key-input" placeholder="Cole sua API Key aqui..." class="w-full text-xs rounded border border-slate-600 bg-slate-800 text-white p-2 focus:border-indigo-400 focus:outline-none mb-2">
-                <div class="flex items-center justify-between">
-                    <button onclick="openApiModal()" class="text-[10px] text-indigo-300 hover:text-indigo-100 underline flex items-center gap-1">
-                        <i class="fa-solid fa-graduation-cap"></i> Entenda o que é isso
-                    </button>
-                </div>
             </div>
 
             <!-- Vygotsky Card -->
@@ -102,7 +82,7 @@
         <div class="flex-1 overflow-y-auto p-8 flex flex-col lg:flex-row gap-8">
             
             <!-- Left Column: Form -->
-            <div class="w-full lg:w-5/12 space-y-6">
+            <div class="w-full lg:w-4/12 space-y-6">
                 <!-- Bloco 1: Contexto e Materialidade -->
                 <div class="glass-panel p-6 rounded-xl shadow-sm">
                     <h3 class="text-lg font-semibold text-slate-800 mb-4 flex items-center gap-2">
@@ -253,16 +233,6 @@
                         <i class="fa-solid fa-clipboard-list text-emerald-400"></i> Gerar "Super Prompt" para Copiar
                     </button>
                     
-                    <div class="relative flex py-2 items-center">
-                        <div class="flex-grow border-t border-slate-300"></div>
-                        <span class="flex-shrink-0 mx-4 text-slate-400 text-xs font-medium uppercase tracking-wider">OU</span>
-                        <div class="flex-grow border-t border-slate-300"></div>
-                    </div>
-
-                    <!-- Botão Secundário: API -->
-                    <button id="generate-btn" class="w-full bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-medium py-3 px-6 rounded-xl border border-indigo-200 transition-all flex items-center justify-center gap-3">
-                        <i class="fa-solid fa-wand-magic-sparkles"></i> Gerar Roteiro Aqui (Requer API Key)
-                    </button>
 
                     <!-- NOVO: Botão de Limpar -->
                     <button id="clear-btn" class="w-full mt-2 text-slate-400 hover:text-red-500 hover:bg-red-50 text-sm font-medium py-2 rounded-xl transition-all flex items-center justify-center gap-2">
@@ -272,7 +242,7 @@
             </div>
 
             <!-- Right Column: Result/Preview -->
-            <div class="w-full lg:w-7/12 flex flex-col">
+            <div class="w-full lg:w-8/12 flex flex-col">
                 <div class="bg-white rounded-2xl shadow-xl border border-slate-200 flex-1 flex flex-col overflow-hidden relative">
                     
                     <!-- Header Result -->
@@ -299,7 +269,7 @@
                                 <i class="fa-solid fa-robot text-4xl text-indigo-300"></i>
                             </div>
                             <h3 class="text-xl font-bold text-slate-700 mb-2">Aguardando Parâmetros</h3>
-                            <p class="text-slate-500 max-w-md">Preencha o formulário ao lado e insira sua API Key para que o motor histórico-cultural gere o plano de mediação cirúrgico.</p>
+                            <p class="text-slate-500 max-w-md">Preencha o formulário ao lado para gerar o seu Super Prompt metodológico e aplicá-lo em uma Inteligência Artificial.</p>
                         </div>
 
                         <!-- Loading State -->
@@ -338,26 +308,14 @@
                                 <!-- Passo 2 -->
                                 <div>
                                     <span class="text-sm font-bold text-slate-700 uppercase tracking-wider mb-4 flex items-center gap-2">
-                                        <span class="bg-slate-800 text-white w-5 h-5 rounded flex items-center justify-center text-xs">2</span> Cole o texto em uma destas IAs gratuitas:
+                                        <span class="bg-slate-800 text-white w-5 h-5 rounded flex items-center justify-center text-xs">2</span> Cole o texto na Inteligência Artificial:
                                     </span>
-                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    <div class="grid grid-cols-1 gap-4">
                                         <!-- Claude -->
                                         <a href="https://claude.ai/new" target="_blank" class="flex flex-col items-center justify-center p-5 rounded-xl border border-orange-200 bg-gradient-to-b from-orange-50 to-white hover:border-orange-400 hover:shadow-md transition-all group cursor-pointer text-decoration-none">
                                             <i class="fa-solid fa-brain text-3xl text-orange-500 mb-3 group-hover:scale-110 transition-transform"></i>
-                                            <span class="font-bold text-slate-800 text-base">Claude 3.5</span>
-                                            <span class="text-xs text-slate-500 text-center mt-1">Recomendado (Maior empatia e nuance pedagógica)</span>
-                                        </a>
-                                        <!-- ChatGPT -->
-                                        <a href="https://chatgpt.com/" target="_blank" class="flex flex-col items-center justify-center p-5 rounded-xl border border-emerald-200 bg-gradient-to-b from-emerald-50 to-white hover:border-emerald-400 hover:shadow-md transition-all group cursor-pointer text-decoration-none">
-                                            <i class="fa-solid fa-comment-dots text-3xl text-emerald-500 mb-3 group-hover:scale-110 transition-transform"></i>
-                                            <span class="font-bold text-slate-800 text-base">ChatGPT</span>
-                                            <span class="text-xs text-slate-500 text-center mt-1">O mais popular (Geralmente rápido e direto)</span>
-                                        </a>
-                                        <!-- Gemini -->
-                                        <a href="https://gemini.google.com/app" target="_blank" class="flex flex-col items-center justify-center p-5 rounded-xl border border-blue-200 bg-gradient-to-b from-blue-50 to-white hover:border-blue-400 hover:shadow-md transition-all group cursor-pointer text-decoration-none">
-                                            <i class="fa-solid fa-sparkles text-3xl text-blue-500 mb-3 group-hover:scale-110 transition-transform"></i>
-                                            <span class="font-bold text-slate-800 text-base">Google Gemini</span>
-                                            <span class="text-xs text-slate-500 text-center mt-1">Conectado à web e bom raciocínio rápido</span>
+                                            <span class="font-bold text-slate-800 text-base">Claude (claude.ai)</span>
+                                            <span class="text-xs text-slate-500 text-center mt-1">Exclusivamente recomendado devido à sua altíssima empatia e aderência à nuance pedagógica e teórica exigida neste tipo de mediação.</span>
                                         </a>
                                     </div>
                                 </div>
@@ -521,62 +479,6 @@
         </div>
     </div>
 
-    <!-- API / Digital Literacy Modal -->
-    <div id="api-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden bg-slate-900/60 backdrop-blur-sm transition-opacity duration-300 opacity-0">
-        <div id="api-modal-content" class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto transform scale-95 transition-transform duration-300 relative">
-            
-            <button onclick="closeApiModal()" class="absolute top-6 right-6 text-slate-400 hover:text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-full w-8 h-8 flex items-center justify-center transition-colors">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-
-            <div class="p-8 md:p-10">
-                <div class="text-center mb-8">
-                    <span class="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-xs font-bold tracking-widest uppercase mb-4 inline-block">Letramento Digital</span>
-                    <h2 class="text-2xl font-bold text-slate-800 mb-2">Desmistificando a API</h2>
-                    <p class="text-slate-500">Nós também mediamos tecnologia! Entenda como a "mágica" funciona por trás dos panos.</p>
-                </div>
-
-                <div class="space-y-6 text-slate-600 text-sm md:text-base">
-                    
-                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-200">
-                        <h3 class="font-bold text-slate-800 mb-2 flex items-center gap-2">
-                            <i class="fa-solid fa-server text-indigo-500"></i> Afinal, o que é uma API?
-                        </h3>
-                        <p class="mb-3">A sigla significa <i>Application Programming Interface</i>, mas a melhor forma de entender é imaginar um <b>restaurante</b>:</p>
-                        <ul class="list-disc pl-5 space-y-2">
-                            <li>Você é o cliente (este aplicativo).</li>
-                            <li>A Cozinha é o cérebro do Google (onde a IA processa e "cozinha" os textos).</li>
-                            <li>A <b>API é o Garçom</b>. Ela pega o seu pedido (nossas teorias pedagógicas), leva até a cozinha (o Google) e traz o prato pronto de volta para a sua mesa (a tela do nosso app).</li>
-                        </ul>
-                    </div>
-
-                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-200">
-                        <h3 class="font-bold text-slate-800 mb-2 flex items-center gap-2">
-                            <i class="fa-solid fa-key text-amber-500"></i> E o que é a Chave (Key)?
-                        </h3>
-                        <p>O Google permite que a gente use o "garçom" deles de graça para construir ferramentas educacionais, mas eles precisam saber <i>quem</i> está fazendo os pedidos para evitar abusos no servidor. A <b>API Key</b> é apenas o seu "crachá" de visitante.</p>
-                    </div>
-
-                    <div class="bg-indigo-50 p-6 rounded-xl border border-indigo-100">
-                        <h3 class="font-bold text-indigo-800 mb-4 flex items-center gap-2">
-                            <i class="fa-solid fa-gift text-indigo-500"></i> Passo a Passo: Como pegar a sua gratuitamente
-                        </h3>
-                        <ol class="list-decimal pl-5 space-y-3 text-indigo-900 font-medium">
-                            <li>Clique no botão abaixo para ir ao <b>Google AI Studio</b>.</li>
-                            <li>Faça login com a sua conta normal do Google/Gmail.</li>
-                            <li>Clique no botão azul <b>"Get API Key"</b> ou <b>"Create API Key"</b>.</li>
-                            <li>Copie o código longo que vai aparecer (começa com <code class="bg-white px-1 rounded text-xs">AIza...</code>).</li>
-                            <li>Volte para o nosso aplicativo e cole essa chave na barra preta à esquerda. Pronto!</li>
-                        </ol>
-                        
-                        <a href="https://aistudio.google.com/app/apikey" target="_blank" class="mt-6 w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-lg text-center transition-all flex items-center justify-center gap-2 shadow-md">
-                            <i class="fa-solid fa-external-link-alt"></i> Ir para o Google AI Studio
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- Incluindo Marked.js para renderizar o Markdown da IA -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -846,79 +748,7 @@ FORMATO DA SUA RESPOSTA OBRIGATÓRIA (Use formatação Markdown rigorosa):
                 });
             }
 
-            // Evento 3: Lógica Original (API Direta Opcional)
-            if (generateBtn) {
-                generateBtn.addEventListener('click', async function() {
-                    // Capture API Key
-                    const apiKeyInput = document.getElementById('api-key-input');
-                    const apiKey = apiKeyInput ? apiKeyInput.value.trim() : '';
-                    
-                    if (!apiKey) {
-                        showToast("API Key necessária! Insira sua chave do Gemini ou gere o Super Prompt.", 'error');
-                        return;
-                    }
 
-                    hideAllStates();
-                    if(loadingState) loadingState.classList.remove('hidden');
-
-                    const systemPrompt = buildSystemPrompt();
-
-                    // Chamada real para a API
-                    try {
-                        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({
-                                contents: [{
-                                    parts: [{ text: systemPrompt }]
-                                }],
-                                generationConfig: {
-                                    temperature: 0.7,
-                                    topK: 40,
-                                    topP: 0.95,
-                                    maxOutputTokens: 2048,
-                                }
-                            })
-                        });
-
-                        const apiData = await response.json();
-
-                        if (!response.ok) {
-                            throw new Error(apiData.error?.message || 'Erro desconhecido ao chamar a API');
-                        }
-
-                        // Extraindo o texto da resposta do Gemini
-                        const generatedText = apiData.candidates[0].content.parts[0].text;
-
-                        // 4. Injetar a resposta processada pelo Marked.js
-                        const responseContainer = document.getElementById('ai-response-container');
-                        if(responseContainer) {
-                            responseContainer.innerHTML = marked.parse(generatedText);
-                        }
-                        
-                        if(loadingState) loadingState.classList.add('hidden');
-                        if(resultContent) {
-                            resultContent.classList.remove('hidden');
-                            void resultContent.offsetWidth; // Trigger reflow
-                            resultContent.classList.add('opacity-100');
-                        }
-                        
-                        if(exportPdfBtn) exportPdfBtn.classList.remove('hidden');
-                        
-                        showToast('Roteiro gerado com sucesso!', 'success');
-
-                    } catch (error) {
-                        console.error("Erro na API:", error);
-                        if(loadingState) loadingState.classList.add('hidden');
-                        if(emptyState) emptyState.classList.remove('hidden');
-                        
-                        // Substituição do alert() por um alerta visual na tela ou via console (evitando blocos nativos)
-                        showToast("Erro ao conectar com a IA: " + error.message, 'error');
-                    }
-                });
-            }
 
             // Evento 4: Botão Limpar Tudo (NOVO)
             if (clearBtn) {
@@ -977,34 +807,7 @@ FORMATO DA SUA RESPOSTA OBRIGATÓRIA (Use formatação Markdown rigorosa):
             }, 300); // wait for fade out transition
         }
 
-        // Modal Functions for API Info (NOVO)
-        function openApiModal() {
-            const modal = document.getElementById('api-modal');
-            const content = document.getElementById('api-modal-content');
-            if(!modal || !content) return;
 
-            modal.classList.remove('hidden');
-            void modal.offsetWidth; // trigger reflow
-            modal.classList.remove('opacity-0');
-            modal.classList.add('opacity-100');
-            content.classList.remove('scale-95');
-            content.classList.add('scale-100');
-        }
-
-        function closeApiModal() {
-            const modal = document.getElementById('api-modal');
-            const content = document.getElementById('api-modal-content');
-            if(!modal || !content) return;
-            
-            modal.classList.remove('opacity-100');
-            modal.classList.add('opacity-0');
-            content.classList.remove('scale-100');
-            content.classList.add('scale-95');
-            
-            setTimeout(() => {
-                modal.classList.add('hidden');
-            }, 300);
-        }
 
         // Modal Functions for Didactic Summary (NOVO)
         function openDidacticModal() {
@@ -1038,14 +841,10 @@ FORMATO DA SUA RESPOSTA OBRIGATÓRIA (Use formatação Markdown rigorosa):
         // Close modals when clicking outside of them
         document.addEventListener('click', function(e) {
             const theoryModal = document.getElementById('theory-modal');
-            const apiModal = document.getElementById('api-modal');
             const didacticModal = document.getElementById('didactic-modal');
             
             if (theoryModal && e.target === theoryModal) {
                 closeModal();
-            }
-            if (apiModal && e.target === apiModal) {
-                closeApiModal();
             }
             if (didacticModal && e.target === didacticModal) {
                 closeDidacticModal();
