@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Práxis Mediadora AI | Planejamento Feuerstein + Vigotski</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        .glass-panel { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border: 1px solid #e2e8f0; }
+        .spinner { animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
+</head>
+<body class="h-screen flex overflow-hidden text-slate-800">
+
+    <!-- Sidebar / Theory Guide -->
+    <aside class="w-80 bg-slate-900 text-white flex flex-col p-6 shadow-2xl z-10 overflow-y-auto">
+        <div class="flex items-center gap-3 mb-8">
+            <div class="bg-indigo-500 p-2 rounded-lg"><i class="fa-solid fa-brain text-xl"></i></div>
+            <h1 class="text-xl font-bold tracking-tight">Práxis<span class="text-indigo-400">Mediadora</span></h1>
+        </div>
+
+        <div class="space-y-6">
+            <div>
+                <h2 class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">Fundamento Epistemológico</h2>
+                <p class="text-sm text-slate-300 leading-relaxed mb-4">
+                    Este motor de IA opera sob a integração materialista-histórica de Vigotski e a modificabilidade estrutural de Feuerstein.
+                </p>
+            </div>
+
+            <!-- API Configuration (NEW) -->
+            <div class="bg-indigo-900/50 rounded-lg p-4 border border-indigo-500/30">
+                <div class="flex items-center justify-between mb-2">
+                    <div class="flex items-center gap-2 text-amber-400">
+                        <i class="fa-solid fa-key"></i>
+                        <h3 class="font-semibold text-sm">Motor IA (Avançado)</h3>
+                    </div>
+                    <button onclick="openApiModal()" class="text-indigo-300 hover:text-white transition-colors" title="O que é isso?">
+                        <i class="fa-solid fa-circle-question text-lg"></i>
+                    </button>
+                </div>
+                <p class="text-xs text-slate-300 mb-2">Conecte o app direto à inteligência artificial.</p>
+                <input type="password" id="api-key-input" placeholder="Cole sua API Key aqui..." class="w-full text-xs rounded border border-slate-600 bg-slate-800 text-white p-2 focus:border-indigo-400 focus:outline-none mb-2">
+                <div class="flex items-center justify-between">
+                    <button onclick="openApiModal()" class="text-[10px] text-indigo-300 hover:text-indigo-100 underline flex items-center gap-1">
+                        <i class="fa-solid fa-graduation-cap"></i> Entenda o que é isso
+                    </button>
+                </div>
+            </div>
+
+            <!-- Vygotsky Card -->
+            <div class="bg-slate-800 rounded-lg p-4 border border-slate-700">
+                <div class="flex items-center gap-2 mb-2 text-indigo-400">
+                    <i class="fa-solid fa-users-viewfinder"></i>
+                    <h3 class="font-semibold text-sm">A Lente Vigotskiana</h3>
+                </div>
+                <p class="text-xs text-slate-300 mb-2">Mapeia a <b>Zona de Desenvolvimento Proximal (ZDP)</b> considerando as condições materiais e de pobreza extrema.</p>
+                <ul class="text-xs text-slate-400 list-disc pl-4 space-y-1">
+                    <li>Desenvolvimento Real</li>
+                    <li>Desenvolvimento Potencial</li>
+                    <li>Ferramentas Histórico-Culturais</li>
+                </ul>
+            </div>
+
+            <!-- Feuerstein Card -->
+            <div class="bg-slate-800 rounded-lg p-4 border border-slate-700 mt-4">
+                <div class="flex items-center gap-2 mb-2 text-indigo-400">
+                    <i class="fa-solid fa-screwdriver-wrench"></i>
+                    <h3 class="font-semibold text-sm">A Lente de Feuerstein</h3>
+                </div>
+                <p class="text-xs text-slate-300 mb-2">Aplica a <b>Experiência de Aprendizagem Mediada (EAM)</b> corrigindo falhas cognitivas.</p>
+            </div>
+            
+            <!-- Botão do Guia -->
+            <button onclick="openModal()" class="mt-8 w-full bg-slate-800 hover:bg-slate-700 text-indigo-300 border border-indigo-500/30 py-3 px-4 rounded-lg text-sm font-medium transition-all flex items-center justify-center gap-2">
+                <i class="fa-solid fa-book-open-reader"></i> Por que isso funciona?
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col h-screen overflow-hidden bg-slate-50 relative">
+        
+        <header class="bg-white border-b border-slate-200 px-8 py-6 flex justify-between items-center z-10">
+            <div>
+                <h2 class="text-2xl font-bold text-slate-800">Criar Intervenção Mediada</h2>
+                <p class="text-sm text-slate-500 mt-1">Preencha os dados estruturais para gerar o script do professor.</p>
+            </div>
+        </header>
+
+        <div class="flex-1 overflow-y-auto p-8 flex flex-col lg:flex-row gap-8">
+            
+            <!-- Left Column: Form -->
+            <div class="w-full lg:w-5/12 space-y-6">
+                <!-- Bloco 1: Contexto e Materialidade -->
+                <div class="glass-panel p-6 rounded-xl shadow-sm">
+                    <h3 class="text-lg font-semibold text-slate-800 mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-map-location-dot text-indigo-500"></i> Contexto & Materialidade
+                    </h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">Disciplina e Tema</label>
+                            <div class="flex gap-3">
+                                <input type="text" id="disciplina" placeholder="Ex: História" class="w-1/3 rounded-lg border-slate-300 border p-2.5 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none">
+                                <input type="text" id="tema" placeholder="Ex: Revolução Industrial" class="w-2/3 rounded-lg border-slate-300 border p-2.5 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">Realidade Material do Aluno</label>
+                            <div class="relative">
+                                <textarea id="realidade" rows="2" placeholder="Ex: Alunos de periferia, sem acesso à internet, histórico de evasão escolar..." class="w-full rounded-lg border-slate-300 border p-2.5 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none pr-10"></textarea>
+                                <button id="mic-btn" class="absolute top-2 right-2 text-slate-400 hover:text-indigo-500 transition-colors p-2 rounded-lg" title="Ditar Realidade">
+                                    <i class="fa-solid fa-microphone"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bloco 2: ZDP (Vigotski) -->
+                <div class="glass-panel p-6 rounded-xl shadow-sm border-l-4 border-l-indigo-500">
+                    <div class="mb-5">
+                        <h3 class="text-lg font-semibold text-slate-800 flex items-center gap-2">
+                            <i class="fa-solid fa-arrows-left-right text-indigo-600"></i> A Ponte da Aprendizagem (ZDP)
+                        </h3>
+                        <p class="text-xs text-slate-500 mt-1 leading-relaxed">
+                            Vigotski ensina que a aula falha se for muito fácil (tédio) ou muito difícil (frustração). A "Ponte" é a distância exata entre o que ele sabe hoje e o que ele vai aprender com sua ajuda agora.
+                        </p>
+                    </div>
+
+                    <!-- NOVO: Componente de Exemplos Expansível -->
+                    <details class="mb-5 group">
+                        <summary class="text-xs text-indigo-600 font-semibold cursor-pointer list-none flex items-center gap-1.5 hover:text-indigo-800 transition-colors w-fit pb-1 border-b border-indigo-200 border-dashed">
+                            <i class="fa-solid fa-lightbulb text-amber-500"></i> Ver exemplos de sala de aula
+                            <i class="fa-solid fa-chevron-down text-[10px] transition-transform group-open:rotate-180"></i>
+                        </summary>
+                        <div class="mt-3 bg-white rounded-lg p-4 border border-indigo-100 shadow-sm text-xs text-slate-600 space-y-3">
+                            <p class="text-slate-500 italic mb-2">A lógica é sempre puxar do conhecimento de mundo (concreto) para o saber escolar (abstrato):</p>
+                            
+                            <div class="flex gap-3 items-start border-l-2 border-indigo-200 pl-2">
+                                <span class="bg-indigo-100 text-indigo-800 font-bold px-2 py-0.5 rounded text-[10px] uppercase tracking-wider mt-0.5">Linguagens</span>
+                                <div>
+                                    <p><b class="text-slate-700">1. Partida:</b> Conta uma fofoca ou história do bairro de forma oral, com começo, meio e fim.</p>
+                                    <p><b class="text-slate-700">2. Chegada:</b> Escrever essa mesma história no papel no formato de um texto narrativo curto.</p>
+                                </div>
+                            </div>
+
+                            <div class="flex gap-3 items-start border-l-2 border-emerald-200 pl-2">
+                                <span class="bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded text-[10px] uppercase tracking-wider mt-0.5">Matemática</span>
+                                <div>
+                                    <p><b class="text-slate-700">1. Partida:</b> Consegue calcular troco de cabeça perfeitamente quando compra algo no mercadinho.</p>
+                                    <p><b class="text-slate-700">2. Chegada:</b> Resolver uma equação de 1º grau simples usando a mesma lógica do "troco".</p>
+                                </div>
+                            </div>
+
+                            <div class="flex gap-3 items-start border-l-2 border-amber-200 pl-2">
+                                <span class="bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded text-[10px] uppercase tracking-wider mt-0.5">Ciências</span>
+                                <div>
+                                    <p><b class="text-slate-700">1. Partida:</b> Sabe por experiência empírica que a água da panela ferve e "some" no fogão.</p>
+                                    <p><b class="text-slate-700">2. Chegada:</b> Compreender o conceito científico de 'evaporação' e aplicá-lo ao ciclo da chuva.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+                    
+                    <div class="space-y-5">
+                        <!-- Ponto de Partida -->
+                        <div class="bg-indigo-50/50 p-4 rounded-lg border border-indigo-100">
+                            <label class="block text-sm font-bold text-slate-700 mb-1">1. O Ponto de Partida (O que ele já consegue fazer sozinho?)</label>
+                            <p class="text-[11px] text-slate-600 mb-3 leading-relaxed">
+                                Seja sincero sobre a realidade atual. Onde ele está ancorado hoje? (Não use termos abstratos)<br>
+                                <span class="text-indigo-600 font-medium"><i class="fa-solid fa-arrow-right-from-bracket mr-1"></i>Ex:</span> "Consegue calcular troco mentalmente na venda, mas erra no papel."<br>
+                                <span class="text-indigo-600 font-medium"><i class="fa-solid fa-arrow-right-from-bracket mr-1"></i>Ex:</span> "Ele lê uma notícia no celular, mas só olha a manchete e acredita em tudo."
+                            </p>
+                            <input type="text" id="ndr" placeholder="Descreva aqui o ponto de partida do seu aluno..." class="w-full rounded-lg border-slate-300 border p-2.5 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none">
+                        </div>
+                        
+                        <!-- Linha de Chegada -->
+                        <div class="bg-indigo-50/50 p-4 rounded-lg border border-indigo-100">
+                            <label class="block text-sm font-bold text-slate-700 mb-1">2. A Linha de Chegada (O que ele fará COM a sua ajuda hoje?)</label>
+                            <p class="text-[11px] text-slate-600 mb-3 leading-relaxed">
+                                Qual é o próximo passo <b>lógico e alcançável</b> para o qual você vai "puxar" esse aluno?<br>
+                                <span class="text-emerald-600 font-medium"><i class="fa-solid fa-bullseye mr-1"></i>Ex:</span> "Transformar a lógica mental do troco em uma equação escrita de 1º grau."<br>
+                                <span class="text-emerald-600 font-medium"><i class="fa-solid fa-bullseye mr-1"></i>Ex:</span> "Aprender a desconfiar da manchete e buscar a fonte primária da notícia."
+                            </p>
+                            <input type="text" id="ndp" placeholder="Descreva aqui qual o próximo passo alcançável de hoje..." class="w-full rounded-lg border-slate-300 border p-2.5 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bloco 3: Funções Cognitivas (Feuerstein) -->
+                <div class="glass-panel p-6 rounded-xl shadow-sm border-l-4 border-l-amber-500">
+                    <div class="mb-5">
+                        <h3 class="text-lg font-semibold text-slate-800 flex items-center gap-2">
+                            <i class="fa-solid fa-microscope text-amber-600"></i> O Foco da Mediação (Onde ele trava?)
+                        </h3>
+                        <p class="text-xs text-slate-500 mt-1 leading-relaxed">
+                            Feuerstein mapeia onde o pensamento do aluno se perde. Não se apegue aos termos acadêmicos: escolha o <b>comportamento real</b> que você mais observa nesse perfil de aluno durante a aula.
+                        </p>
+                    </div>
+                    
+                    <div class="space-y-5">
+                        <!-- Fase 1 -->
+                        <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                            <label class="block text-sm font-bold text-slate-700">1. A Entrada (Recebendo os dados)</label>
+                            <p class="text-[11px] text-slate-500 mb-2">O erro principal acontece logo no início, no contato com o texto ou exercício?</p>
+                            <select id="fase-entrada" class="w-full rounded-lg border-slate-300 border p-2.5 text-sm focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none bg-white">
+                                <option value="Impulsividade na coleta de dados (O aluno lê correndo, 'chuta' as respostas e ignora os detalhes importantes da instrução)">Impulsividade: Lê correndo, "chuta" respostas e ignora a instrução.</option>
+                                <option value="Percepção episódica da realidade (O aluno vê as informações soltas, fragmentadas, sem conseguir ligar o que veio antes e o que vem depois)">Visão Fragmentada: Vê os fatos soltos, não percebe começo, meio e fim.</option>
+                                <option value="Falta de orientação espacial/temporal (O aluno não consegue se localizar no contexto da época histórica ou do lugar geográfico)">Desorientação: Fica totalmente perdido no tempo (época) ou espaço (lugar).</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Fase 2 -->
+                        <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                            <label class="block text-sm font-bold text-slate-700">2. A Elaboração (Processando na mente)</label>
+                            <p class="text-[11px] text-slate-500 mb-2">Ele até lê bem, mas na hora de cruzar ideias e raciocinar, onde ele empaca?</p>
+                            <select id="fase-elaboracao" class="w-full rounded-lg border-slate-300 border p-2.5 text-sm focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none bg-white">
+                                <option value="Dificuldade em perceber contradições (O aluno aceita duas ideias opostas como verdadeiras sem questionar o sentido lógico)">Não percebe contradição lógicas: Aceita ideias opostas sem questionar.</option>
+                                <option value="Incapacidade de comparar/categorizar (O aluno não consegue olhar para duas coisas e dizer o que têm em comum ou de diferente)">Dificuldade em comparar: Não consegue ver semelhanças, diferenças ou agrupar.</option>
+                                <option value="Pensamento não-hipotético (O aluno não consegue prever consequências, pensar 'E se...?' ou trabalhar com ideias fora do concreto)">Falta de pensamento hipotético: Não consegue imaginar cenários ("E se?").</option>
+                            </select>
+                        </div>
+
+                        <!-- Fase 3 -->
+                        <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                            <label class="block text-sm font-bold text-slate-700">3. A Saída (Expressando o que aprendeu)</label>
+                            <p class="text-[11px] text-slate-500 mb-2">Ele entendeu na cabeça, mas na hora de explicar falando ou escrevendo...</p>
+                            <select id="fase-saida" class="w-full rounded-lg border-slate-300 border p-2.5 text-sm focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none bg-white">
+                                <option value="Comunicação egocêntrica (O aluno acha que o professor 'lê sua mente', responde 'tipo assim' e omite os passos lógicos da explicação)">Comunicação Egocêntrica: Responde "tipo assim", achando que você lê a mente dele.</option>
+                                <option value="Bloqueio e desistência (O aluno trava no primeiro erro, apaga tudo violentamente ou diz 'não sei' por medo de arriscar)">Bloqueio e Desistência: Trava no primeiro erro e desiste logo de cara.</option>
+                                <option value="Vocabulário inadequado/impreciso (Faltam palavras adequadas para a disciplina, ele substitui conceitos por 'aquele negócio' ou 'bagulho')">Vocabulário Impreciso: Substitui os nomes corretos por "aquele negócio" ou "bagulho".</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ações do Professor (Modificado) -->
+                <div class="space-y-3 mt-8">
+                    <!-- Botão Principal: Gerar Prompt -->
+                    <button id="generate-prompt-btn" class="w-full bg-slate-800 hover:bg-slate-900 text-white font-semibold py-4 px-6 rounded-xl shadow-lg shadow-slate-200 transition-all transform hover:-translate-y-1 flex items-center justify-center gap-3">
+                        <i class="fa-solid fa-clipboard-list text-emerald-400"></i> Gerar "Super Prompt" para Copiar
+                    </button>
+                    
+                    <div class="relative flex py-2 items-center">
+                        <div class="flex-grow border-t border-slate-300"></div>
+                        <span class="flex-shrink-0 mx-4 text-slate-400 text-xs font-medium uppercase tracking-wider">OU</span>
+                        <div class="flex-grow border-t border-slate-300"></div>
+                    </div>
+
+                    <!-- Botão Secundário: API -->
+                    <button id="generate-btn" class="w-full bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-medium py-3 px-6 rounded-xl border border-indigo-200 transition-all flex items-center justify-center gap-3">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> Gerar Roteiro Aqui (Requer API Key)
+                    </button>
+
+                    <!-- NOVO: Botão de Limpar -->
+                    <button id="clear-btn" class="w-full mt-2 text-slate-400 hover:text-red-500 hover:bg-red-50 text-sm font-medium py-2 rounded-xl transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-eraser"></i> Limpar Formulário
+                    </button>
+                </div>
+            </div>
+
+            <!-- Right Column: Result/Preview -->
+            <div class="w-full lg:w-7/12 flex flex-col">
+                <div class="bg-white rounded-2xl shadow-xl border border-slate-200 flex-1 flex flex-col overflow-hidden relative">
+                    
+                    <!-- Header Result -->
+                    <div class="bg-slate-50 border-b border-slate-200 p-4 flex items-center justify-between gap-3">
+                        <div class="flex items-center gap-3">
+                            <div class="flex gap-2">
+                                <div class="w-3 h-3 rounded-full bg-red-400"></div>
+                                <div class="w-3 h-3 rounded-full bg-amber-400"></div>
+                                <div class="w-3 h-3 rounded-full bg-emerald-400"></div>
+                            </div>
+                            <span class="text-xs font-medium text-slate-500 font-mono">Script_de_Intervencao.md</span>
+                        </div>
+                        <button id="export-pdf-btn" class="hidden bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold py-2 px-4 rounded-lg shadow-md transition-all flex items-center gap-2">
+                            <i class="fa-solid fa-file-pdf"></i> Exportar PDF Oficial
+                        </button>
+                    </div>
+
+                    <!-- Content Area -->
+                    <div class="p-8 flex-1 overflow-y-auto relative bg-white">
+                        
+                        <!-- Empty State -->
+                        <div id="empty-state" class="absolute inset-0 flex flex-col items-center justify-center text-center p-8 bg-slate-50/50">
+                            <div class="w-24 h-24 bg-indigo-50 rounded-full flex items-center justify-center mb-6">
+                                <i class="fa-solid fa-robot text-4xl text-indigo-300"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-700 mb-2">Aguardando Parâmetros</h3>
+                            <p class="text-slate-500 max-w-md">Preencha o formulário ao lado e insira sua API Key para que o motor histórico-cultural gere o plano de mediação cirúrgico.</p>
+                        </div>
+
+                        <!-- Loading State -->
+                        <div id="loading-state" class="hidden absolute inset-0 flex flex-col items-center justify-center text-center bg-white z-10">
+                            <i class="fa-solid fa-circle-notch text-indigo-500 text-5xl spinner mb-4"></i>
+                            <h3 class="text-lg font-semibold text-slate-700">Acessando Conhecimento Base...</h3>
+                            <p class="text-slate-500 text-sm mt-2 max-w-xs">Estruturando andaimes cognitivos baseados em Vigotski e Feuerstein.</p>
+                        </div>
+
+                        <!-- Prompt View State (NOVA TELA) -->
+                        <div id="prompt-state" class="hidden absolute inset-0 flex flex-col p-8 bg-white z-10 overflow-y-auto">
+                            <div class="flex items-center gap-4 mb-8">
+                                <div class="bg-emerald-100 p-4 rounded-full text-emerald-600 shadow-sm border border-emerald-200">
+                                    <i class="fa-solid fa-clipboard-check text-2xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-2xl font-bold text-slate-800">Seu Super Prompt está pronto!</h3>
+                                    <p class="text-sm text-slate-500 mt-1">Siga os 2 passos abaixo para gerar sua aula em qualquer IA gratuita.</p>
+                                </div>
+                            </div>
+
+                            <div class="space-y-8 flex-1">
+                                <!-- Passo 1 -->
+                                <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 relative shadow-sm">
+                                    <div class="flex justify-between items-center mb-3">
+                                        <span class="text-sm font-bold text-slate-700 uppercase tracking-wider flex items-center gap-2">
+                                            <span class="bg-slate-800 text-white w-5 h-5 rounded flex items-center justify-center text-xs">1</span> Copie o texto metodológico:
+                                        </span>
+                                        <button id="copy-prompt-btn" class="text-xs bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 py-2 px-4 rounded-md transition-all flex items-center gap-2 font-semibold shadow-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                                            <i class="fa-solid fa-copy"></i> Copiar Prompt
+                                        </button>
+                                    </div>
+                                    <textarea id="generated-prompt-textarea" readonly class="w-full h-64 bg-white border border-slate-300 rounded-lg p-4 text-sm font-mono text-slate-600 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 resize-none"></textarea>
+                                </div>
+
+                                <!-- Passo 2 -->
+                                <div>
+                                    <span class="text-sm font-bold text-slate-700 uppercase tracking-wider mb-4 flex items-center gap-2">
+                                        <span class="bg-slate-800 text-white w-5 h-5 rounded flex items-center justify-center text-xs">2</span> Cole o texto em uma destas IAs gratuitas:
+                                    </span>
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                        <!-- Claude -->
+                                        <a href="https://claude.ai/new" target="_blank" class="flex flex-col items-center justify-center p-5 rounded-xl border border-orange-200 bg-gradient-to-b from-orange-50 to-white hover:border-orange-400 hover:shadow-md transition-all group cursor-pointer text-decoration-none">
+                                            <i class="fa-solid fa-brain text-3xl text-orange-500 mb-3 group-hover:scale-110 transition-transform"></i>
+                                            <span class="font-bold text-slate-800 text-base">Claude 3.5</span>
+                                            <span class="text-xs text-slate-500 text-center mt-1">Recomendado (Maior empatia e nuance pedagógica)</span>
+                                        </a>
+                                        <!-- ChatGPT -->
+                                        <a href="https://chatgpt.com/" target="_blank" class="flex flex-col items-center justify-center p-5 rounded-xl border border-emerald-200 bg-gradient-to-b from-emerald-50 to-white hover:border-emerald-400 hover:shadow-md transition-all group cursor-pointer text-decoration-none">
+                                            <i class="fa-solid fa-comment-dots text-3xl text-emerald-500 mb-3 group-hover:scale-110 transition-transform"></i>
+                                            <span class="font-bold text-slate-800 text-base">ChatGPT</span>
+                                            <span class="text-xs text-slate-500 text-center mt-1">O mais popular (Geralmente rápido e direto)</span>
+                                        </a>
+                                        <!-- Gemini -->
+                                        <a href="https://gemini.google.com/app" target="_blank" class="flex flex-col items-center justify-center p-5 rounded-xl border border-blue-200 bg-gradient-to-b from-blue-50 to-white hover:border-blue-400 hover:shadow-md transition-all group cursor-pointer text-decoration-none">
+                                            <i class="fa-solid fa-sparkles text-3xl text-blue-500 mb-3 group-hover:scale-110 transition-transform"></i>
+                                            <span class="font-bold text-slate-800 text-base">Google Gemini</span>
+                                            <span class="text-xs text-slate-500 text-center mt-1">Conectado à web e bom raciocínio rápido</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Result Content -->
+                        <div id="result-content" class="hidden opacity-0 transition-opacity duration-500 pb-12">
+                            <!-- Markdown wrapper classes for Tailwind -->
+                            <style>
+                                .markdown-body h3 { font-size: 1.25rem; font-weight: 700; color: #1e293b; margin-top: 1.5rem; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.5rem;}
+                                .markdown-body p { margin-bottom: 1rem; color: #475569; line-height: 1.6; font-size: 0.95rem; }
+                                .markdown-body ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1rem; color: #475569; font-size: 0.95rem;}
+                                .markdown-body li { margin-bottom: 0.25rem; }
+                                .markdown-body strong { color: #334155; font-weight: 600; }
+                            </style>
+                            <div id="ai-response-container" class="markdown-body">
+                                <!-- Markdown renders here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Theory Modal -->
+    <div id="theory-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden bg-slate-900/40 backdrop-blur-sm transition-opacity duration-300 opacity-0">
+        <div id="theory-modal-content" class="bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-y-auto transform scale-95 transition-transform duration-300 relative">
+            
+            <button onclick="closeModal()" class="absolute top-6 right-6 text-slate-400 hover:text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-full w-8 h-8 flex items-center justify-center transition-colors">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="p-10">
+                <div class="text-center mb-10">
+                    <span class="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-xs font-bold tracking-widest uppercase mb-4 inline-block">Guia do Mediador</span>
+                    <h2 class="text-3xl font-bold text-slate-800 mb-4">Por que esse planejamento funciona?</h2>
+                    <p class="text-slate-500 max-w-2xl mx-auto text-lg">Seus alunos da escola pública não têm deficiência intelectual; eles têm uma história de privação de estímulos. Veja como nosso motor reverte isso.</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Vigotski Card -->
+                    <div class="bg-blue-50/50 rounded-2xl p-8 border border-blue-100">
+                        <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-6">
+                            <i class="fa-solid fa-map text-2xl text-blue-600"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-800 mb-3">O Mapa: Lev Vigotski</h3>
+                        <p class="text-slate-600 mb-4 leading-relaxed">
+                            Para Vigotski, a inteligência não nasce com a gente, ela é construída de fora para dentro. O menino pobre não tem "atraso", ele apenas não teve acesso às ferramentas culturais adequadas.
+                        </p>
+                        <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-100">
+                            <h4 class="font-bold text-blue-700 text-sm mb-2">A Zona de Desenvolvimento Proximal (ZDP)</h4>
+                            <p class="text-sm text-slate-600">É a distância entre o que o aluno faz sozinho hoje e o que ele pode fazer amanhã se você der o "andaime" certo. Esta IA cria o andaime exato para sua disciplina.</p>
+                        </div>
+                    </div>
+
+                    <!-- Feuerstein Card -->
+                    <div class="bg-amber-50/50 rounded-2xl p-8 border border-amber-100">
+                        <div class="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center mb-6">
+                            <i class="fa-solid fa-scalpel text-2xl text-amber-600"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-800 mb-3">O Bisturi: Reuven Feuerstein</h3>
+                        <p class="text-slate-600 mb-4 leading-relaxed">
+                            Feuerstein trabalhou com sobreviventes do Holocausto e provou: o cérebro pode ser modificado estruturalmente em qualquer idade. Não importa o trauma ou a pobreza.
+                        </p>
+                        <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-100">
+                            <h4 class="font-bold text-amber-700 text-sm mb-2">Experiência de Aprendizagem Mediada</h4>
+                            <p class="text-sm text-slate-600">O professor não é "expositor de conteúdo". Ele é o Mediador que se interpõe entre o aluno e o mundo, corrigindo como o aluno percebe, elabora e expressa as ideias.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Comparativo PEI -->
+                <div class="mt-8 bg-indigo-50/50 rounded-2xl p-8 border border-indigo-100">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center">
+                            <i class="fa-solid fa-file-signature text-2xl text-indigo-600"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-800">Além dos PEIs Genéricos (Plano Educacional Individualizado)</h3>
+                    </div>
+                    
+                    <div class="space-y-5 text-slate-600 leading-relaxed text-sm md:text-base">
+                        <p>
+                            <strong class="text-indigo-800 font-bold">Em que medida nos aproximamos?</strong><br>
+                            Assim como os PEIs autênticos (que buscam integrar alunos com necessidades especiais ou defasagens extremas), nosso objetivo é a <b>inclusão real e a personalização</b>. O respeito inegociável à realidade material do estudante e ao seu ponto de partida (sua ZDP) é o coração do nosso sistema.
+                        </p>
+                        <p>
+                            <strong class="text-indigo-800 font-bold">Como nos afastamos para criar uma nova abordagem?</strong><br>
+                            O PEI genérico, frequentemente, descamba para o "facilitacionismo" — reduzir o volume de tarefas, simplificar a prova, pintar a atividade com desenhos ou isentar o aluno do desafio cognitivo. Nossa ferramenta <b>rejeita a pena e o rebaixamento de expectativas</b>. Ao invés de diminuir a barra, nós usamos a Modificabilidade Cognitiva para construir "andaimes" (Mediação), atacando a falha cognitiva estrutural para que o aluno consiga alcançar o raciocínio complexo esperado.
+                        </p>
+                        <p>
+                            <strong class="text-indigo-800 font-bold">Isso substitui os PEIs Genéricos?</strong><br>
+                            Substitui a <i>prática pedagógica inerte</i> e burocrática atrelada a eles. Enquanto um PEI genérico na gaveta muitas vezes serve apenas como um "atestado de déficit" para cumprir tabela, esta inteligência artificial atua como a <b>execução cirúrgica do planejamento</b>. Ela transforma a intenção de inclusão em scripts literais (ação mediadora), focando no avanço intelectual prático e provável, superando a mera e passiva "socialização" escolar do aluno na sala de aula.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- API / Digital Literacy Modal -->
+    <div id="api-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden bg-slate-900/60 backdrop-blur-sm transition-opacity duration-300 opacity-0">
+        <div id="api-modal-content" class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto transform scale-95 transition-transform duration-300 relative">
+            
+            <button onclick="closeApiModal()" class="absolute top-6 right-6 text-slate-400 hover:text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-full w-8 h-8 flex items-center justify-center transition-colors">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="p-8 md:p-10">
+                <div class="text-center mb-8">
+                    <span class="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-xs font-bold tracking-widest uppercase mb-4 inline-block">Letramento Digital</span>
+                    <h2 class="text-2xl font-bold text-slate-800 mb-2">Desmistificando a API</h2>
+                    <p class="text-slate-500">Nós também mediamos tecnologia! Entenda como a "mágica" funciona por trás dos panos.</p>
+                </div>
+
+                <div class="space-y-6 text-slate-600 text-sm md:text-base">
+                    
+                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-200">
+                        <h3 class="font-bold text-slate-800 mb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-server text-indigo-500"></i> Afinal, o que é uma API?
+                        </h3>
+                        <p class="mb-3">A sigla significa <i>Application Programming Interface</i>, mas a melhor forma de entender é imaginar um <b>restaurante</b>:</p>
+                        <ul class="list-disc pl-5 space-y-2">
+                            <li>Você é o cliente (este aplicativo).</li>
+                            <li>A Cozinha é o cérebro do Google (onde a IA processa e "cozinha" os textos).</li>
+                            <li>A <b>API é o Garçom</b>. Ela pega o seu pedido (nossas teorias pedagógicas), leva até a cozinha (o Google) e traz o prato pronto de volta para a sua mesa (a tela do nosso app).</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-200">
+                        <h3 class="font-bold text-slate-800 mb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-key text-amber-500"></i> E o que é a Chave (Key)?
+                        </h3>
+                        <p>O Google permite que a gente use o "garçom" deles de graça para construir ferramentas educacionais, mas eles precisam saber <i>quem</i> está fazendo os pedidos para evitar abusos no servidor. A <b>API Key</b> é apenas o seu "crachá" de visitante.</p>
+                    </div>
+
+                    <div class="bg-indigo-50 p-6 rounded-xl border border-indigo-100">
+                        <h3 class="font-bold text-indigo-800 mb-4 flex items-center gap-2">
+                            <i class="fa-solid fa-gift text-indigo-500"></i> Passo a Passo: Como pegar a sua gratuitamente
+                        </h3>
+                        <ol class="list-decimal pl-5 space-y-3 text-indigo-900 font-medium">
+                            <li>Clique no botão abaixo para ir ao <b>Google AI Studio</b>.</li>
+                            <li>Faça login com a sua conta normal do Google/Gmail.</li>
+                            <li>Clique no botão azul <b>"Get API Key"</b> ou <b>"Create API Key"</b>.</li>
+                            <li>Copie o código longo que vai aparecer (começa com <code class="bg-white px-1 rounded text-xs">AIza...</code>).</li>
+                            <li>Volte para o nosso aplicativo e cole essa chave na barra preta à esquerda. Pronto!</li>
+                        </ol>
+                        
+                        <a href="https://aistudio.google.com/app/apikey" target="_blank" class="mt-6 w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-lg text-center transition-all flex items-center justify-center gap-2 shadow-md">
+                            <i class="fa-solid fa-external-link-alt"></i> Ir para o Google AI Studio
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Incluindo Marked.js para renderizar o Markdown da IA -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+    <!-- Toast Notifications -->
+    <div id="toast-container" class="fixed bottom-4 right-4 z-50 flex flex-col gap-2"></div>
+
+    <script>
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toast-container');
+            if(!container) return;
+            const toast = document.createElement('div');
+            
+            let bg, icon;
+            if (type === 'error') {
+                bg = 'bg-red-50 border-red-200 text-red-800';
+                icon = '<i class="fa-solid fa-circle-exclamation text-red-500"></i>';
+            } else if (type === 'success') {
+                bg = 'bg-emerald-50 border-emerald-200 text-emerald-800';
+                icon = '<i class="fa-solid fa-circle-check text-emerald-500"></i>';
+            } else {
+                bg = 'bg-indigo-50 border-indigo-200 text-indigo-800';
+                icon = '<i class="fa-solid fa-microphone text-indigo-500"></i>';
+            }
+
+            toast.className = `flex items-center gap-3 p-4 rounded-xl border shadow-lg transform transition-all duration-300 translate-y-full opacity-0 ${bg} max-w-sm mb-2`;
+            toast.innerHTML = `
+                <div class="text-xl">${icon}</div>
+                <div class="text-sm font-medium leading-tight">${message}</div>
+                <button class="ml-auto text-slate-400 hover:text-slate-600 focus:outline-none" onclick="this.parentElement.remove()">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            `;
+            
+            container.appendChild(toast);
+            
+            // Animate in
+            setTimeout(() => {
+                toast.classList.remove('translate-y-full', 'opacity-0');
+            }, 10);
+            
+            // Auto remove
+            setTimeout(() => {
+                toast.classList.add('translate-y-full', 'opacity-0');
+                setTimeout(() => toast.remove(), 300);
+            }, 5000);
+        }
+
+        // Garante que o DOM está totalmente carregado antes de anexar ouvintes
+        document.addEventListener('DOMContentLoaded', () => {
+            const generateBtn = document.getElementById('generate-btn');
+            const generatePromptBtn = document.getElementById('generate-prompt-btn');
+            const copyPromptBtn = document.getElementById('copy-prompt-btn');
+            const clearBtn = document.getElementById('clear-btn'); // NOVO
+            
+            // UI States
+            const emptyState = document.getElementById('empty-state');
+            const resultContent = document.getElementById('result-content');
+            const loadingState = document.getElementById('loading-state');
+            const promptState = document.getElementById('prompt-state');
+
+            // Função auxiliar para ocultar todos os estados
+            const hideAllStates = () => {
+                if(emptyState) emptyState.classList.add('hidden');
+                if(loadingState) loadingState.classList.add('hidden');
+                if(promptState) promptState.classList.add('hidden');
+                if(resultContent) {
+                    resultContent.classList.add('hidden');
+                    resultContent.classList.remove('opacity-100');
+                }
+                const exportPdfBtn = document.getElementById('export-pdf-btn');
+                if(exportPdfBtn) exportPdfBtn.classList.add('hidden');
+            };
+
+            // Reconhecimento de Voz (Speech Recognition)
+            const micBtn = document.getElementById('mic-btn');
+            const realidadeInput = document.getElementById('realidade');
+            
+            if (micBtn && realidadeInput && ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                const recognition = new SpeechRecognition();
+                recognition.lang = 'pt-BR';
+                recognition.continuous = false;
+                recognition.interimResults = false;
+                
+                let isRecording = false;
+
+                recognition.onstart = () => {
+                    isRecording = true;
+                    micBtn.classList.remove('text-slate-400');
+                    micBtn.classList.add('text-red-500', 'animate-pulse');
+                    micBtn.innerHTML = '<i class="fa-solid fa-microphone-lines"></i>';
+                    showToast('Ouvindo... Pode falar.', 'info');
+                };
+
+                recognition.onresult = (event) => {
+                    const transcript = event.results[0][0].transcript;
+                    const currentValue = realidadeInput.value;
+                    realidadeInput.value = currentValue ? currentValue + ' ' + transcript : transcript;
+                };
+
+                recognition.onerror = (event) => {
+                    console.error("Erro no reconhecimento de voz", event.error);
+                    if (event.error !== 'aborted') {
+                        showToast('Erro no reconhecimento de voz.', 'error');
+                    }
+                };
+
+                recognition.onend = () => {
+                    isRecording = false;
+                    micBtn.classList.add('text-slate-400');
+                    micBtn.classList.remove('text-red-500', 'animate-pulse');
+                    micBtn.innerHTML = '<i class="fa-solid fa-microphone"></i>';
+                };
+
+                micBtn.addEventListener('click', () => {
+                    if (isRecording) {
+                        recognition.stop();
+                    } else {
+                        recognition.start();
+                    }
+                });
+            } else if (micBtn) {
+                micBtn.addEventListener('click', () => {
+                    showToast('Reconhecimento de voz não suportado neste navegador.', 'error');
+                });
+            }
+
+            // Lógica de Exportar PDF
+            const exportPdfBtn = document.getElementById('export-pdf-btn');
+            if(exportPdfBtn) {
+                exportPdfBtn.addEventListener('click', () => {
+                    const element = document.getElementById('ai-response-container');
+                    const opt = {
+                      margin:       15,
+                      filename:     'Planejamento_Oficial.pdf',
+                      image:        { type: 'jpeg', quality: 0.98 },
+                      html2canvas:  { scale: 2, useCORS: true },
+                      jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                    };
+                    html2pdf().set(opt).from(element).save();
+                    showToast('Gerando PDF...', 'info');
+                });
+            }
+
+            // Função segura para buscar valores dos inputs de texto
+            const getVal = (id) => {
+                const el = document.getElementById(id);
+                return el ? el.value : '[Não informado]';
+            };
+            
+            // Função modificada: Agora extrai o "value" do select, que contém a instrução técnica longa para a IA
+            const getSelectVal = (id) => {
+                const el = document.getElementById(id);
+                return el && el.selectedIndex >= 0 ? el.value : '[Não informado]';
+            };
+
+            // Função Central: Constrói a "Armadura Teórica" (System Prompt)
+            const buildSystemPrompt = () => {
+                const data = {
+                    disciplina: getVal('disciplina'),
+                    tema: getVal('tema'),
+                    realidade: getVal('realidade'),
+                    ndr: getVal('ndr'),
+                    ndp: getVal('ndp'),
+                    entrada: getSelectVal('fase-entrada'),
+                    elaboracao: getSelectVal('fase-elaboracao'),
+                    saida: getSelectVal('fase-saida')
+                };
+
+                return `Você é um pedagogo magistral, especialista absoluto na teoria Histórico-Cultural de Lev Vigotski e na Modificabilidade Cognitiva Estrutural de Reuven Feuerstein. 
+Seu objetivo é gerar um roteiro prático e cirúrgico de intervenção pedagógica para um professor que trabalha com alunos em extrema pobreza e com falsos diagnósticos de "atraso mental".
+
+DIRETRIZES FUNDAMENTAIS (NÃO DESVIE):
+1. Rejeite o determinismo biológico. A dificuldade do aluno é fruto de privação material e cultural, não falta de inteligência inata.
+2. Não crie aulas conteudistas ("passe o texto no quadro"). O foco é a MEDIAÇÃO. O professor é um mediador que se interpõe entre o aluno e o mundo.
+3. Não use jargões motivacionais superficiais. Use rigor metodológico.
+4. Entregue scripts literais do que o professor deve falar para "bloquear" o erro cognitivo do aluno.
+5. OBRIGATÓRIO: O seu retorno deve conter EXATAMENTE as seguintes TRÊS partes estruturadas.
+
+DADOS DA AULA SOLICITADA PELO PROFESSOR:
+- Disciplina: ${data.disciplina}
+- Tema da Aula: ${data.tema}
+- Realidade Material do Aluno: ${data.realidade}
+- Zona de Desenvolvimento Proximal (ZDP): O aluno sai de "${data.ndr}" (Desenvolvimento Real) e deve chegar a "${data.ndp}" (Potencial).
+- Falha na Fase de Entrada detectada: ${data.entrada}
+- Falha na Fase de Elaboração detectada: ${data.elaboracao}
+- Falha na Fase de Saída detectada: ${data.saida}
+
+FORMATO DA SUA RESPOSTA OBRIGATÓRIA (Use formatação Markdown rigorosa):
+
+# PARTE 1: Plano de Aula Oficial (O Script)
+(Um parágrafo explicando como o tema da aula se conecta com a realidade do aluno para gerar Significado).
+
+### 📥 Etapa 1: Fase de Entrada (Coleta de Dados)
+- **O Foco:** Como superar a falha de ${data.entrada}.
+- **Ação Mediadora:** O que o professor deve fazer com o material (texto/imagem/etc).
+- **🗣️ Script do Mediador:** Escreva exatamente as frases em primeira pessoa que o professor deve dizer para guiar o aluno.
+
+### ⚙️ Etapa 2: Fase de Elaboração (O Conflito / ZDP)
+- **O Foco:** Como superar a falha de ${data.elaboracao}.
+- **Ação Mediadora:** Como criar o conflito dialético e ajudar o aluno a pensar de onde ele está para onde ele deve ir na ZDP.
+- **🗣️ Script do Mediador:** Exemplo do que falar.
+- **🚀 Critério de Transcendência:** (Explique como o professor mostra que essa habilidade de raciocínio serve para a vida real/sobrevivência do aluno fora da escola).
+
+### 📤 Etapa 3: Fase de Saída (Precisão e Expressão)
+- **O Foco:** Como corrigir a falha de ${data.saida}.
+- **Ação Mediadora:** Como garantir que o aluno não desista e consiga expressar o conhecimento.
+- **🗣️ Script do Mediador:** Exemplo prático.
+
+---
+
+# PARTE 2: Andaime Textual do Aluno
+(Crie o texto, problema ou atividade exata que será impressa ou entregue ao aluno. Use linguagem acessível, alinhada à realidade de ${data.realidade}. 
+*Crucial:* Insira "Paradas de Pensamento" (ex: "[PAUSA] Mediador, aqui você pergunta:...") dentro do próprio texto/atividade para garantir que o aluno não pule as etapas de processamento.)
+
+---
+
+# PARTE 3: Relatório de Avaliação Dinâmica
+(Crie uma rubrica rápida para o professor provar à gestão o avanço cognitivo do aluno.)
+- **Critério 1 (Entrada):** O aluno parou de "chutar" e analisou os dados? (Sim/Não - Evidência)
+- **Critério 2 (Elaboração):** O aluno conectou as ideias e percebeu contradições? (Sim/Não - Evidência)
+- **Critério 3 (Saída):** O aluno expressou o raciocínio sem bloqueio ou comunicação egocêntrica? (Sim/Não - Evidência)
+- **Conclusão:** Próximos passos para a EAM (Experiência de Aprendizagem Mediada).`;
+            };
+
+            // Evento 1: Clicou em "Gerar Super Prompt"
+            if (generatePromptBtn) {
+                generatePromptBtn.addEventListener('click', function() {
+                    const promptText = buildSystemPrompt();
+                    const textarea = document.getElementById('generated-prompt-textarea');
+                    
+                    if (textarea) textarea.value = promptText;
+                    
+                    hideAllStates();
+                    if(promptState) promptState.classList.remove('hidden');
+                });
+            }
+
+            // Evento 2: Clicou em "Copiar Prompt"
+            if (copyPromptBtn) {
+                copyPromptBtn.addEventListener('click', function() {
+                    const textarea = document.getElementById('generated-prompt-textarea');
+                    if (!textarea) return;
+                    
+                    textarea.select();
+                    textarea.setSelectionRange(0, 99999); // Suporte para mobile
+                    
+                    try {
+                        document.execCommand('copy');
+                        
+                        // Animação de Sucesso no botão
+                        const originalHTML = copyPromptBtn.innerHTML;
+                        copyPromptBtn.innerHTML = '<i class="fa-solid fa-check-double text-emerald-600"></i> Copiado com Sucesso!';
+                        copyPromptBtn.classList.remove('text-slate-700', 'hover:bg-slate-100');
+                        copyPromptBtn.classList.add('bg-emerald-50', 'border-emerald-300', 'text-emerald-700');
+                        
+                        setTimeout(() => {
+                            copyPromptBtn.innerHTML = originalHTML;
+                            copyPromptBtn.classList.add('text-slate-700', 'hover:bg-slate-100');
+                            copyPromptBtn.classList.remove('bg-emerald-50', 'border-emerald-300', 'text-emerald-700');
+                        }, 2500);
+                    } catch (err) {
+                        showToast('Erro ao copiar o texto. Por favor, copie manualmente (Ctrl+C).', 'error');
+                    }
+                });
+            }
+
+            // Evento 3: Lógica Original (API Direta Opcional)
+            if (generateBtn) {
+                generateBtn.addEventListener('click', async function() {
+                    // Capture API Key
+                    const apiKeyInput = document.getElementById('api-key-input');
+                    const apiKey = apiKeyInput ? apiKeyInput.value.trim() : '';
+                    
+                    if (!apiKey) {
+                        showToast("API Key necessária! Insira sua chave do Gemini ou gere o Super Prompt.", 'error');
+                        return;
+                    }
+
+                    hideAllStates();
+                    if(loadingState) loadingState.classList.remove('hidden');
+
+                    const systemPrompt = buildSystemPrompt();
+
+                    // Chamada real para a API
+                    try {
+                        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                contents: [{
+                                    parts: [{ text: systemPrompt }]
+                                }],
+                                generationConfig: {
+                                    temperature: 0.7,
+                                    topK: 40,
+                                    topP: 0.95,
+                                    maxOutputTokens: 2048,
+                                }
+                            })
+                        });
+
+                        const apiData = await response.json();
+
+                        if (!response.ok) {
+                            throw new Error(apiData.error?.message || 'Erro desconhecido ao chamar a API');
+                        }
+
+                        // Extraindo o texto da resposta do Gemini
+                        const generatedText = apiData.candidates[0].content.parts[0].text;
+
+                        // 4. Injetar a resposta processada pelo Marked.js
+                        const responseContainer = document.getElementById('ai-response-container');
+                        if(responseContainer) {
+                            responseContainer.innerHTML = marked.parse(generatedText);
+                        }
+                        
+                        if(loadingState) loadingState.classList.add('hidden');
+                        if(resultContent) {
+                            resultContent.classList.remove('hidden');
+                            void resultContent.offsetWidth; // Trigger reflow
+                            resultContent.classList.add('opacity-100');
+                        }
+                        
+                        if(exportPdfBtn) exportPdfBtn.classList.remove('hidden');
+                        
+                        showToast('Roteiro gerado com sucesso!', 'success');
+
+                    } catch (error) {
+                        console.error("Erro na API:", error);
+                        if(loadingState) loadingState.classList.add('hidden');
+                        if(emptyState) emptyState.classList.remove('hidden');
+                        
+                        // Substituição do alert() por um alerta visual na tela ou via console (evitando blocos nativos)
+                        showToast("Erro ao conectar com a IA: " + error.message, 'error');
+                    }
+                });
+            }
+
+            // Evento 4: Botão Limpar Tudo (NOVO)
+            if (clearBtn) {
+                clearBtn.addEventListener('click', function() {
+                    // Limpar inputs de texto
+                    document.getElementById('disciplina').value = '';
+                    document.getElementById('tema').value = '';
+                    document.getElementById('realidade').value = '';
+                    document.getElementById('ndr').value = '';
+                    document.getElementById('ndp').value = '';
+                    
+                    // Resetar selects para a primeira opção
+                    document.getElementById('fase-entrada').selectedIndex = 0;
+                    document.getElementById('fase-elaboracao').selectedIndex = 0;
+                    document.getElementById('fase-saida').selectedIndex = 0;
+
+                    // Opcional: limpar também a API key (descomente se quiser)
+                    // document.getElementById('api-key-input').value = '';
+
+                    // Voltar para a tela vazia
+                    hideAllStates();
+                    if(emptyState) emptyState.classList.remove('hidden');
+                });
+            }
+        });
+
+        // Modal Functions for Theory Guide
+        function openModal() {
+            const modal = document.getElementById('theory-modal');
+            const content = document.getElementById('theory-modal-content');
+            if(!modal || !content) return;
+
+            modal.classList.remove('hidden');
+            
+            // Trigger reflow to restart animations
+            void modal.offsetWidth;
+            
+            modal.classList.remove('opacity-0');
+            modal.classList.add('opacity-100');
+            content.classList.remove('scale-95');
+            content.classList.add('scale-100');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('theory-modal');
+            const content = document.getElementById('theory-modal-content');
+            if(!modal || !content) return;
+            
+            modal.classList.remove('opacity-100');
+            modal.classList.add('opacity-0');
+            content.classList.remove('scale-100');
+            content.classList.add('scale-95');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300); // wait for fade out transition
+        }
+
+        // Modal Functions for API Info (NOVO)
+        function openApiModal() {
+            const modal = document.getElementById('api-modal');
+            const content = document.getElementById('api-modal-content');
+            if(!modal || !content) return;
+
+            modal.classList.remove('hidden');
+            void modal.offsetWidth; // trigger reflow
+            modal.classList.remove('opacity-0');
+            modal.classList.add('opacity-100');
+            content.classList.remove('scale-95');
+            content.classList.add('scale-100');
+        }
+
+        function closeApiModal() {
+            const modal = document.getElementById('api-modal');
+            const content = document.getElementById('api-modal-content');
+            if(!modal || !content) return;
+            
+            modal.classList.remove('opacity-100');
+            modal.classList.add('opacity-0');
+            content.classList.remove('scale-100');
+            content.classList.add('scale-95');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        // Close modals when clicking outside of them
+        document.addEventListener('click', function(e) {
+            const theoryModal = document.getElementById('theory-modal');
+            const apiModal = document.getElementById('api-modal');
+            
+            if (theoryModal && e.target === theoryModal) {
+                closeModal();
+            }
+            if (apiModal && e.target === apiModal) {
+                closeApiModal();
+            }
+        });
+    </script>
+</body>
+</html>
